@@ -67,6 +67,7 @@ chat_models = (
     "o1-preview-2024-09-12",
     "o3-mini",  # links to latest version
     "o3-mini-2025-01-31",
+    'mock-llm-ru'
     # "gpt-3.5-turbo-0613",  # deprecated, shutdown 2024-09-13
     # "gpt-3.5-turbo-16k-0613",  # # deprecated, shutdown 2024-09-13
 )
@@ -298,7 +299,7 @@ class OpenAIGenerator(OpenAICompatible):
     ENV_VAR = "OPENAI_API_KEY"
     active = True
     generator_family_name = "OpenAI"
-    supports_multiple_generations = True
+    supports_multiple_generations = False
 
     # remove uri as it is not overridable in this class.
     DEFAULT_PARAMS = {

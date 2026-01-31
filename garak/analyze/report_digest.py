@@ -235,7 +235,7 @@ def _get_group_info(probe_group, group_score, taxonomy, config=_config) -> dict:
     if taxonomy is None:
         probe_module = re.sub("[^0-9A-Za-z_]", "", probe_group)
         m = importlib.import_module(f"garak.probes.{probe_module}")
-        group_doc = markdown.markdown(plugin_docstring_to_description(m.__doc__))
+        # group_doc = markdown.markdown(plugin_docstring_to_description(m.__doc__))
         group_link = (
             f"https://reference.garak.ai/en/latest/garak.probes.{probe_group}.html"
         )
@@ -371,7 +371,7 @@ def append_report_object(reportfile: IO, object: dict):
     last_char = reportfile.read()
     if last_char not in "\n\r":  # catch if we need to make a new line
         reportfile.write("\n")
-    reportfile.write(json.dumps(object))
+    reportfile.write(json.dumps(object, ensure_ascii=False))
 
 
 def build_digest(report_filename: str, config=_config):

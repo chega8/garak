@@ -110,7 +110,8 @@ class PayloadGroup:
                         "entries": len(self.payloads),
                         "filesize": int(payload_stat.st_size),
                         "mtime": str(payload_stat.st_mtime),
-                    }
+                    },
+                    ensure_ascii=False,
                 )
                 + "\n"
             )
