@@ -7,17 +7,19 @@ from garak.data import path as data_path
 from garak.probes.base import Probe
 
 
-class RuJBB(Probe):
+class JBB(Probe):
     """
     Минимальная probe: загружает промпты из CSV/JSONL/JSON и отдаёт их garak.
     Buffs будут применены автоматически на уровне Probe.probe() -> _buff_hook().
     """
 
-    tags = ["ru", "dataset", "jbb"]
+    tags = ["en", "dataset", "jbb"]
+    lang = "en"
+    primary_detector = "jbb.JBBDetector"
 
     DEFAULT_PARAMS = Probe.DEFAULT_PARAMS | {
         "path": None,
-        "prompt_field": "prompt_ru",
+        "prompt_field": "Goal",
         "limit": None,
     }
 
@@ -28,7 +30,7 @@ class RuJBB(Probe):
         if not path:
             path = data_path / "ru_jbb" / "ru-jbb.csv"
 
-        prompt_field = os.getenv("RU_JBB_PROMPT_FIELD", self.prompt_field)
+        prompt_field = "Goal"
 
         limit = self.limit
         limit_env = os.getenv("RU_JBB_LIMIT")
@@ -83,18 +85,20 @@ class RuJBB(Probe):
             return prompts[:limit] if limit else prompts
 
         raise ValueError("Unsupported file type. Use .csv, .jsonl or .json")
-
-class RuJBBBenign(Probe):
+    
+class JBBBenign(Probe):
     """
     Минимальная probe: загружает промпты из CSV/JSONL/JSON и отдаёт их garak.
     Buffs будут применены автоматически на уровне Probe.probe() -> _buff_hook().
     """
 
-    tags = ["ru", "dataset", "jbb"]
+    tags = ["en", "dataset", "jbb"]
+    lang = "en"
+    primary_detector = "jbb.JBBDetector"
 
     DEFAULT_PARAMS = Probe.DEFAULT_PARAMS | {
         "path": None,
-        "prompt_field": "prompt_ru",
+        "prompt_field": "Goal",
         "limit": None,
     }
 
@@ -105,7 +109,7 @@ class RuJBBBenign(Probe):
         if not path:
             path = data_path / "ru_jbb" / "ru-jbb-benign.csv"
 
-        prompt_field = os.getenv("RU_JBB_PROMPT_FIELD", self.prompt_field)
+        prompt_field = "Goal"
 
         limit = self.limit
         limit_env = os.getenv("RU_JBB_LIMIT")

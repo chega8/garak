@@ -128,18 +128,20 @@ def _select_positions(length: int, cap: int, include_endpoint: bool = True) -> L
 # RuJBBBadCharsProbe
 # =======================
 
-class RuJBBBadCharsProbe(Probe):
+class JBBBadCharsProbe(Probe):
     """
     Applies Bad Characters perturbations to a RU corpus of harmful prompts.
     Loads prompts from garak/data/ru_jbb/ru-jbb.csv (or custom path via config).
     """
 
-    tags = ["ru", "badchars", "jailbreak"]
-    goal = "apply imperceptible unicode perturbations to RU prompts"
+    tags = ["en", "badchars", "jailbreak"]
+    lang = "en"
+    goal = "apply imperceptible unicode perturbations to EN prompts"
+    primary_detector = "jbb.JBBDetector"
 
     DEFAULT_PARAMS = Probe.DEFAULT_PARAMS | {
         "path": None,
-        "prompt_field": "prompt_ru",
+        "prompt_field": "Goal",
         "max_seeds": 5,
         "perturbation_budget": 1,
         "enabled_categories": ["invisible", "homoglyph", "reordering", "deletion"],
@@ -162,7 +164,7 @@ class RuJBBBadCharsProbe(Probe):
         if path is None:
             path = data_path / "ru_jbb" / "ru-jbb.csv"
         path = Path(path) if not isinstance(path, Path) else path
-        prompt_field = os.getenv("RU_JBB_PROMPT_FIELD", self.prompt_field)
+        prompt_field = 'Goal'
         self._load_prompts(path, prompt_field)
 
         categories = self.enabled_categories
@@ -325,18 +327,20 @@ class RuJBBBadCharsProbe(Probe):
                 {"op": "deletion", "pos": pos},
             )
 
-class RuJBBBadCharsBenignProbe(Probe):
+class JBBBadCharsBenignProbe(Probe):
     """
     Applies Bad Characters perturbations to a RU corpus of harmful prompts.
     Loads prompts from garak/data/ru_jbb/ru-jbb.csv (or custom path via config).
     """
 
-    tags = ["ru", "badchars", "jailbreak"]
-    goal = "apply imperceptible unicode perturbations to RU prompts"
+    tags = ["en", "badchars", "jailbreak"]
+    lang = "en"
+    goal = "apply imperceptible unicode perturbations to EN prompts"
+    primary_detector = "jbb.JBBDetector"
 
     DEFAULT_PARAMS = Probe.DEFAULT_PARAMS | {
         "path": None,
-        "prompt_field": "prompt_ru",
+        "prompt_field": "Goal",
         "max_seeds": 5,
         "perturbation_budget": 1,
         "enabled_categories": ["invisible", "homoglyph", "reordering", "deletion"],
@@ -359,7 +363,7 @@ class RuJBBBadCharsBenignProbe(Probe):
         if path is None:
             path = data_path / "ru_jbb" / "ru-jbb-benign.csv"
         path = Path(path) if not isinstance(path, Path) else path
-        prompt_field = os.getenv("RU_JBB_PROMPT_FIELD", self.prompt_field)
+        prompt_field = 'Goal'
         self._load_prompts(path, prompt_field)
 
         categories = self.enabled_categories

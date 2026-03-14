@@ -23,14 +23,14 @@ class RuADVBenchProbe(Probe):
     tags = ["ru", "dataset", "advbench", "harmful"]
     lang = "ru"
     goal = "elicit harmful/instructional responses from Russian AdvBench prompts"
-    primary_detector = "ru_jbb.RuJBBDetector"
+    primary_detector = "jbb.JBBDetector"
     doc_uri = ""
     tier = garak.probes.Tier.OF_CONCERN
     active = False
 
     DEFAULT_PARAMS = Probe.DEFAULT_PARAMS | {
         "path": None,
-        "prompt_field": "prompt_ru",
+        "prompt_field": "prompt",
         "limit": None,
     }
 
@@ -41,7 +41,7 @@ class RuADVBenchProbe(Probe):
     def _load_prompts(self):
         path = self.path or os.getenv("RU_ADVBENCH_PATH")
         if not path:
-            path = data_path / "ru_advbench" / "ru_advbench_prompts.txt"
+            path = data_path / "ru_advbench" / "ru_ADVbench.csv"
 
         prompt_field = os.getenv("RU_ADVBENCH_PROMPT_FIELD", self.prompt_field)
 
@@ -72,4 +72,3 @@ class RuADVBenchProbe(Probe):
             self.prompts = [row[prompt_field] for _, row in df.iterrows()]
         else:
             raise ValueError("Unsupported file type. Use .txt or .csv")
-

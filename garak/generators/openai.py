@@ -165,9 +165,12 @@ class OpenAICompatible(Generator):
 
     def __init__(self, name="", config_root=_config):
         self.name = name
-        self._load_config(config_root)
         self.fullname = f"{self.generator_family_name} {self.name}"
         self.key_env_var = self.ENV_VAR
+
+        # Load configurable params, including uri/api_key overrides, before
+        # constructing the OpenAI client.
+        super().__init__(self.name, config_root=config_root)
 
         self._load_unsafe()
 
@@ -180,8 +183,6 @@ class OpenAICompatible(Generator):
             )
 
         self._validate_config()
-
-        super().__init__(self.name, config_root=config_root)
 
     # noinspection PyArgumentList
     @backoff.on_exception(

@@ -426,6 +426,12 @@ def main(arguments=None) -> None:
                 has_config_file_or_json = True
                 config_plugin_type = getattr(_config.plugins, plugin_plural)
 
+                if plugin_type == "generator" and _config.plugins.target_type:
+                    for part in _config.plugins.target_type.split("."):
+                        if part not in config_plugin_type:
+                            config_plugin_type[part] = {}
+                        config_plugin_type = config_plugin_type[part]
+
                 config_plugin_type = _config._combine_into(
                     opts_cli_config, config_plugin_type
                 )
